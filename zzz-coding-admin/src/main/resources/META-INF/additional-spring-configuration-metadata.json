@@ -1,0 +1,33 @@
+{
+  "properties": [
+    {
+      "name": "spring.datasource",
+      "type": "java.lang.String",
+      "description": "Description for spring.datasource."
+    },
+    {
+      "name": "spring.mybatis-plus.configuration.log-impl",
+      "type": "java.lang.String",
+      "description": "Description for spring.mybatis-plus.configuration.log-impl."
+    },
+    {
+      "name": "jwt.tokenHeader",
+      "type": "java.lang.String",
+      "description": "Description for jwt.tokenHeader."
+    },
+    {
+      "name": "jwt.tokenHead",
+      "type": "java.lang.String",
+      "description": "Description for jwt.tokenHead."
+    },
+    {
+      "name": "jwt.expiration",
+      "type": "java.lang.Long",
+      "description": "Description for jwt.expiration."
+    },
+    {
+      "name": "jwt.secret",
+      "type": "java.lang.String",
+      "description": "Description for jwt.secret."
+    }
+  ] }

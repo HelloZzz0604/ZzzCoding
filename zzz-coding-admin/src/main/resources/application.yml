@@ -1,0 +1,62 @@
+spring:
+#  security:
+#    user:
+#      name: javaboy
+#      password: 123
+  main:
+    allow-circular-references: true
+    allow-bean-definition-overriding: true
+  profiles:
+    active: dev #默认环境是dev
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    username: root
+    password: Nashidehuakai0
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/codingmore?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+server:
+  port: 8080
+
+mybatis-plus:
+  mapper-locations:
+    - classpath:dao/*.xml
+    - classpath*:com/**/mapper/*.xml
+  global-config:
+    db-config:
+      table-underline: true
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+secure:
+  ignored:
+    urls: #安全路径白名单
+      - /doc.html
+      - /swagger-ui/**
+      - /swagger/**
+      - /swagger-resources/**
+      - /**/v3/api-docs
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /webjars/springfox-swagger-ui/**
+      - /actuator/**
+      - /druid/**
+      - /users/login
+      - /users/register
+      - /users/info
+      - /users/logout
+      - /minio/upload
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: codingmore-admin-secret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer '  #JWT负载中拿到开头
+
+
