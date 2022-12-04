@@ -96,6 +96,9 @@ public class UsersController {
         return ResultObject.success(tokenMap);
     }
 
+    @ApiOperation(value = "refresh token")
+    @RequestMapping(value = "/refreshToken", method = RequestMethod.GET)
+    @ResponseBody
     public ResultObject refreshToken(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader);
         String refreshToken = usersService.refreshToken(token);
@@ -109,4 +112,5 @@ public class UsersController {
         tokenMap.put("tokenHead", tokenHead);
         return ResultObject.success(tokenMap);
     }
+
 }
