@@ -7,9 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zzzcoding.exception.Asserts;
 import com.zzzcoding.mapper.AdminRoleRelationMapper;
 import com.zzzcoding.mapper.UsersMapper;
-import com.zzzcoding.model.AdminUserDetails;
-import com.zzzcoding.model.Resource;
-import com.zzzcoding.model.Users;
+import com.zzzcoding.model.*;
 import com.zzzcoding.service.IUsersCacheService;
 import com.zzzcoding.service.IUsersService;
 import com.zzzcoding.util.JwtTokenUtil;
@@ -134,5 +132,16 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
     @Override
     public String refreshToken(String oldToken) {
         return jwtTokenUtil.refreshHeadToken(oldToken);
+    }
+
+    @Override
+    public List<Role> getRoleList(Long adminId) { return adminRoleRelationMapper.getRoleList(adminId); }
+
+    @Override
+    public boolean removeUser(Long userId) {
+        QueryWrapper<AdminRoleRelation> query = new QueryWrapper<>();
+        query.eq("users_id", userId);
+        adminRoleRelationMapper.delete(query);
+        return this.removeById(userId);
     }
 }
