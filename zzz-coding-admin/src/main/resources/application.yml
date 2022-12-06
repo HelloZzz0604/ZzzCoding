@@ -54,7 +54,6 @@ secure:
       - /users/login
       - /users/register
       - /users/info
-      - /users/logout
       - /minio/upload
 jwt:
   tokenHeader: Authorization #JWT存储的请求头

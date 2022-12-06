@@ -3,6 +3,7 @@ package com.zzzcoding.mapper;
 import com.zzzcoding.model.AdminRoleRelation;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zzzcoding.model.Resource;
+import com.zzzcoding.model.Role;
 import org.apache.ibatis.annotations.Param;
 
 
@@ -22,4 +23,6 @@ public interface AdminRoleRelationMapper extends BaseMapper<AdminRoleRelation> {
     List<Resource> getResourceList(@Param("usersId") Long usersId);
 
     List<Long> getAdminIdList(@Param("resourceId") Long resourceId);
+
+    List<Role> getRoleList(@Param("usersId") Long usersId);
 }

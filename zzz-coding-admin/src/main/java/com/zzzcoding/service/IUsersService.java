@@ -2,6 +2,7 @@ package com.zzzcoding.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzzcoding.model.Resource;
+import com.zzzcoding.model.Role;
 import com.zzzcoding.model.Users;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -56,4 +57,13 @@ public interface IUsersService extends IService<Users>{
      * @return
      */
     List<Resource> getResourceList(Long adminId);
+
+    /**
+     * get role list
+     * @param adminId
+     * @return
+     */
+    List<Role> getRoleList(Long adminId);
+
+    boolean removeUser(Long usersId);
 }

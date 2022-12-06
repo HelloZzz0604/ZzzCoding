@@ -1,8 +1,11 @@
 package com.zzzcoding.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import com.zzzcoding.dto.UsersLoginParam;
 import com.zzzcoding.dto.UsersParam;
 import com.zzzcoding.dto.UsersParamUpdate;
+import com.zzzcoding.model.AdminUserDetails;
+import com.zzzcoding.model.Role;
 import com.zzzcoding.model.Users;
 import com.zzzcoding.service.IRoleService;
 import com.zzzcoding.service.IUsersService;
@@ -12,6 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -21,9 +25,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Wenjie Zhang
@@ -113,4 +120,41 @@ public class UsersController {
         return ResultObject.success(tokenMap);
     }
 
+    @ApiOperation(value = "get admin info")
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    @ResponseBody
+    public ResultObject getAdminInfo(Principal principal) {
+        if (principal == null) {
+            return ResultObject.unauthorized(null);
+        }
+        AdminUserDetails adminUserDetails = (AdminUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Users users = adminUserDetails.getUsers();
+        users.setUserPass(null);
+
+        Map<String, Object> data = new HashMap<>();
+
+        data.put("userDetail", adminUserDetails.getUsers());
+        data.put("username", users.getUserLogin());
+        data.put("menus", roleService.getMenuList(users.getUsersId()));
+        data.put("icon", users.getDisplayName());
+
+        List<Role> roleList = usersService.getRoleList(users.getUsersId());
+        if (CollUtil.isNotEmpty(roleList)) {
+            List<String> roles = roleList.stream().map(Role::getName).collect(Collectors.toList());
+            data.put("roles", roles);
+        }
+        return ResultObject.success(data);
+    }
+
+    @ApiOperation(value = "delete user by id")
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultObject<String> delete(long usersId) {
+        return ResultObject.success(usersService.removeUser(usersId) ? "success" : "fail");
+    }
+
+    @ApiOperation(value = "log out")
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultObject logout() { return ResultObject.success(null); }
 }
