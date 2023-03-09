@@ -20,7 +20,7 @@ spring:
     time-zone: GMT+8
   datasource:
     username: root
-    password: Nashidehuakai0
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/codingmore?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
 server:
@@ -51,9 +51,9 @@ secure:
       - /webjars/springfox-swagger-ui/**
       - /actuator/**
       - /druid/**
-      - /users/login
-      - /users/register
-      - /users/info
+      - /admin/login
+      - /admin/register
+      - /admin/info
       - /minio/upload
 jwt:
   tokenHeader: Authorization #JWT存储的请求头

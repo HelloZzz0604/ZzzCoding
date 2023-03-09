@@ -33,7 +33,7 @@ public class CustomSecurityConfig{
     private DynamicSecurityService dynamicSecurityService;
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
                 .authorizeRequests();
         registry.antMatchers(HttpMethod.OPTIONS).permitAll();
@@ -66,4 +66,5 @@ public class CustomSecurityConfig{
         return httpSecurity.build();
     }
 }
+
 

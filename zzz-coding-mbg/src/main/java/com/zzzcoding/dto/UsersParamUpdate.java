@@ -20,7 +20,7 @@ public class UsersParamUpdate implements Serializable {
 
     @ApiModelProperty(value = "nickname")
     @NotBlank(message = "nickname cannot be null")
-    private String userNicename;
+    private String userNickname;
 
     @ApiModelProperty(value = "email")
     private String userEmail;

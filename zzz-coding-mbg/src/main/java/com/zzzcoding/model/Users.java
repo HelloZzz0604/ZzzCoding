@@ -35,7 +35,7 @@ public class Users implements Serializable {
     private String userPass;
 
     @ApiModelProperty(value = "昵称")
-    private String userNicename;
+    private String userNickname;
 
     @ApiModelProperty(value = "Email")
     private String userEmail;
