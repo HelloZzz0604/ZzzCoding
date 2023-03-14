@@ -54,9 +54,9 @@ public class UsersController {
     @Autowired
     private IRoleService roleService;
 
+    @ApiOperation("get users by id")
     @RequestMapping(value = "/getById", method = RequestMethod.GET)
     @ResponseBody
-    @ApiOperation("get users by id")
     public ResultObject<Users> getById(Long usersId) {
         Users users = usersService.getById(usersId);
 
@@ -64,10 +64,10 @@ public class UsersController {
         return ResultObject.success(users);
     }
 
+    @ApiOperation("update")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    @ApiOperation("update")
-    public ResultObject<String> update(@Validated UsersParamUpdate usersParam) {
+    public ResultObject<String> update(@Validated @RequestBody UsersParamUpdate usersParam) {
         if (usersParam.getUsersId() == null) {
             return ResultObject.failed("ID cannot be null");
         }
@@ -137,7 +137,6 @@ public class UsersController {
         data.put("userDetail", adminUserDetails.getUsers());
         data.put("username", users.getUserLogin());
         data.put("menus", roleService.getMenuList(users.getUsersId()));
-        data.put("icon", users.getDisplayName());
 
         List<Role> roleList = usersService.getRoleList(users.getUsersId());
         if (CollUtil.isNotEmpty(roleList)) {

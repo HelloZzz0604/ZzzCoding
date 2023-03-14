@@ -26,7 +26,8 @@
             m.sort sort,
             m.name name,
             m.icon icon,
-            m.hidden hidden
+            m.hidden hidden,
+            m.path path
         FROM
             admin_role_relation arr
                 LEFT JOIN role r ON arr.role_id = r.role_id

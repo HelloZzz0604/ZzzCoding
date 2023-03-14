@@ -27,29 +27,30 @@ public class Menu implements Serializable {
     @TableId(value = "menu_id", type = IdType.AUTO)
     private Long menuId;
 
-    @ApiModelProperty(value = "父级ID")
+    @ApiModelProperty(value = "parent id")
     private Long parentId;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value = "create time")
     private Date createTime;
 
-    @ApiModelProperty(value = "菜单名称")
+    @ApiModelProperty(value = "title")
     private String title;
 
-    @ApiModelProperty(value = "菜单级数")
+    @ApiModelProperty(value = "level")
     private Integer level;
 
-    @ApiModelProperty(value = "菜单排序")
+    @ApiModelProperty(value = "sort")
     private Integer sort;
 
-    @ApiModelProperty(value = "前端名称")
+    @ApiModelProperty(value = "name")
     private String name;
 
-    @ApiModelProperty(value = "前端图标")
+    @ApiModelProperty(value = "icon")
     private String icon;
 
-    @ApiModelProperty(value = "前端隐藏")
+    @ApiModelProperty(value = "hidden")
     private Integer hidden;
 
-
+    @ApiModelProperty(value = "path")
+    private String path;
 }
