@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,7 +39,7 @@ import java.util.stream.Collectors;
  */
 @Controller
 @Api(tags = "users")
-@RequestMapping("/users")
+@RequestMapping("/admin")
 public class UsersController {
 
     @Autowired
@@ -80,7 +81,7 @@ public class UsersController {
     @ApiOperation(value = "Register")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public ResultObject<String> register(@Validated UsersParam users) {
+    public ResultObject<String> register(@Validated @RequestBody UsersParam users) {
         Users userDto = new Users();
         userDto.setUserRegistered(new Date());
         BeanUtils.copyProperties(users, userDto);
@@ -90,7 +91,7 @@ public class UsersController {
     @ApiOperation(value = "Login and generate token")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public ResultObject login(@Validated UsersLoginParam users, BindingResult result) {
+    public ResultObject login(@Validated @RequestBody UsersLoginParam users) {
         String token = usersService.login(users.getUserLogin(), users.getUserPass());
 
         if (token == null) {

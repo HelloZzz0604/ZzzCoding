@@ -7,7 +7,7 @@
         <id column="users_id" property="id" />
         <result column="user_login" property="userLogin" />
         <result column="user_pass" property="userPass" />
-        <result column="user_nicename" property="userNicename" />
+        <result column="user_nickname" property="userNickname" />
         <result column="user_email" property="userEmail" />
         <result column="user_url" property="userUrl" />
         <result column="user_registered" property="userRegistered" />
