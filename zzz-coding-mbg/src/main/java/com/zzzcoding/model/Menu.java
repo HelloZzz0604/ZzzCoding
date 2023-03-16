@@ -1,9 +1,15 @@
 package com.zzzcoding.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import java.util.ArrayList;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -53,4 +59,14 @@ public class Menu implements Serializable {
 
     @ApiModelProperty(value = "path")
     private String path;
+
+    @TableField(exist = false)
+    private List<Menu> children;
+
+    public void addChild(Menu menu) {
+        if (children == null) {
+            children = new ArrayList<>();
+        }
+        children.add(menu);
+    }
 }

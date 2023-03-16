@@ -136,7 +136,7 @@ public class UsersController {
 
         data.put("userDetail", adminUserDetails.getUsers());
         data.put("username", users.getUserLogin());
-        data.put("menus", roleService.getMenuList(users.getUsersId()));
+        data.put("menus", roleService.getMenuListByRole(users.getUsersId()));
 
         List<Role> roleList = usersService.getRoleList(users.getUsersId());
         if (CollUtil.isNotEmpty(roleList)) {
