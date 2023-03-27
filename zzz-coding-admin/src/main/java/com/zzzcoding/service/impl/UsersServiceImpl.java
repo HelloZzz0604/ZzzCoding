@@ -1,9 +1,11 @@
 package com.zzzcoding.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zzzcoding.dto.ResetPasswordParam;
 import com.zzzcoding.exception.Asserts;
 import com.zzzcoding.mapper.AdminRoleRelationMapper;
 import com.zzzcoding.mapper.UsersMapper;
@@ -143,5 +145,21 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
         query.eq("users_id", userId);
         adminRoleRelationMapper.delete(query);
         return this.removeById(userId);
+    }
+
+    @Override
+    public int resetPassword(ResetPasswordParam resetPasswordParam) {
+        if (StrUtil.isEmpty(resetPasswordParam.getUsername()) || StrUtil.isEmpty(resetPasswordParam.getNewPassword()) || StrUtil.isEmpty(resetPasswordParam.getOldPassword())) {
+            return -1;
+        }
+        Users users = getAdminByUsername(resetPasswordParam.getUsername());
+        if(!passwordEncoder.matches(resetPasswordParam.getOldPassword(),users.getUserPass())){
+            return -3;
+        }
+        String newPassword = passwordEncoder.encode(resetPasswordParam.getNewPassword());
+        users.setUserPass(newPassword);
+        baseMapper.updateById(users);
+        usersCacheService.delAdminUserByUserId(users.getUsersId());
+        return 1;
     }
 }

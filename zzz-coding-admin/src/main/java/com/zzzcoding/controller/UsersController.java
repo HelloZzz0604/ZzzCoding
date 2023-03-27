@@ -1,6 +1,7 @@
 package com.zzzcoding.controller;
 
 import cn.hutool.core.collection.CollUtil;
+import com.zzzcoding.dto.ResetPasswordParam;
 import com.zzzcoding.dto.UsersLoginParam;
 import com.zzzcoding.dto.UsersParam;
 import com.zzzcoding.dto.UsersParamUpdate;
@@ -17,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,7 +65,7 @@ public class UsersController {
     }
 
     @ApiOperation("update")
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @ResponseBody
     public ResultObject<String> update(@Validated @RequestBody UsersParamUpdate usersParam) {
         if (usersParam.getUsersId() == null) {
@@ -153,8 +153,26 @@ public class UsersController {
         return ResultObject.success(usersService.removeUser(usersId) ? "success" : "fail");
     }
 
+    @ApiOperation(value = "Reset Password")
+    @RequestMapping(value = "/reset", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultObject<String> resetPassword(@Validated @RequestBody ResetPasswordParam resetPasswordParam) {
+        int status = usersService.resetPassword(resetPasswordParam);
+        if (status == 1) {
+            return ResultObject.success("success");
+        } else if (status == -1) {
+            return ResultObject.failed("Invalid Parameter");
+        } else if (status == -3) {
+            return ResultObject.failed("Your old password is not correct.");
+        } else {
+            return ResultObject.failed();
+        }
+    }
+
     @ApiOperation(value = "log out")
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     @ResponseBody
-    public ResultObject logout() { return ResultObject.success(null); }
+    public ResultObject logout() {
+        return ResultObject.success(null);
+    }
 }
