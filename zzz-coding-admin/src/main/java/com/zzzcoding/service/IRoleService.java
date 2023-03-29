@@ -20,5 +20,5 @@ public interface IRoleService extends IService<Role> {
      * @param userId
      * @return
      */
-    List<Menu> getMenuList(Long userId);
+    List<Menu> getMenuListByRole(Long userId);
 }

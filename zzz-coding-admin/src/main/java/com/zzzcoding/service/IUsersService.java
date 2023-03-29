@@ -1,6 +1,7 @@
 package com.zzzcoding.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zzzcoding.dto.ResetPasswordParam;
 import com.zzzcoding.model.Resource;
 import com.zzzcoding.model.Role;
 import com.zzzcoding.model.Users;
@@ -66,4 +67,6 @@ public interface IUsersService extends IService<Users>{
     List<Role> getRoleList(Long adminId);
 
     boolean removeUser(Long usersId);
+
+    int resetPassword(ResetPasswordParam resetPasswordParam);
 }
