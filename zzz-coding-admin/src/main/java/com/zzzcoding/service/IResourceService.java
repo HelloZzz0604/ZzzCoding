@@ -3,6 +3,8 @@ package com.zzzcoding.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzzcoding.model.Resource;
 
+import java.util.List;
+
 /**
  * <p>
  * 后台资源表 服务类
