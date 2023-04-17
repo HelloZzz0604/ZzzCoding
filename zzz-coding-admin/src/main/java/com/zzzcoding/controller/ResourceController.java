@@ -4,11 +4,13 @@ package com.zzzcoding.controller;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.zzzcoding.dto.ResourceParam;
 import com.zzzcoding.dto.BaseQueryParam;
 import com.zzzcoding.dto.ResourceQueryParam;
 import com.zzzcoding.model.Resource;
 import com.zzzcoding.service.IResourceService;
+import com.zzzcoding.webapi.CommonPage;
 import com.zzzcoding.webapi.ResultObject;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
+
 
 /**
  * <p>
@@ -54,7 +57,7 @@ public class ResourceController {
             resourceQueryWrapper.eq("categoryId", resourceQueryParam.getCategoryId());
         }
         Page<Resource> pagination = new Page<>(baseQueryParam.getPage(), baseQueryParam.getPerPage());
-        return ResultObject.success(resourceService.page(pagination, resourceQueryWrapper));
+        return ResultObject.success(CommonPage.toPageResponse(resourceService.page(pagination, resourceQueryWrapper)));
     }
 }
 
