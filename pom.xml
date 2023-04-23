@@ -13,7 +13,7 @@
 		<module>zzz-coding-admin</module>
 		<module>zzz-coding-mbg</module>
         <module>zzz-coding-common</module>
-		<module>zzz-coding-securityy</module>
+		<module>zzz-coding-security</module>
 	</modules>
 
 	<parent>

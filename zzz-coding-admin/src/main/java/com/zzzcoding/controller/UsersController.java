@@ -64,8 +64,8 @@ public class UsersController {
         return ResultObject.success(users);
     }
 
-    @ApiOperation("update")
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    @ApiOperation("update selected user information")
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public ResultObject<String> update(@Validated @RequestBody UsersParamUpdate usersParam) {
         if (usersParam.getUsersId() == null) {

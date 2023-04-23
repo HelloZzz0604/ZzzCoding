@@ -1,5 +1,6 @@
 package com.zzzcoding.dto;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class ResourceParam implements Serializable {
     private Long categoryId;
 
     @ApiModelProperty(value = "create time")
+    @TableField(value = "create_time")
     private Date createTime;
 
     @ApiModelProperty(value = "name")

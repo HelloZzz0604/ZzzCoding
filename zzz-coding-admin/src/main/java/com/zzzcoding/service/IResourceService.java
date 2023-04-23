@@ -2,6 +2,10 @@ package com.zzzcoding.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzzcoding.model.Resource;
+import com.zzzcoding.webapi.BaseService;
+import org.apache.ibatis.executor.BaseExecutor;
+
+import java.util.List;
 
 /**
  * <p>
@@ -11,6 +15,6 @@ import com.zzzcoding.model.Resource;
  * @author Wenjie Zhang
  * @date 9/10/2022 11:19 pm
  */
-public interface IResourceService extends IService<Resource> {
+public interface IResourceService extends BaseService<Resource> {
     boolean remove(Long resourceId);
 }

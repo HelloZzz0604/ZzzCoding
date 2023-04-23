@@ -2,6 +2,8 @@ package com.zzzcoding.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -31,6 +33,7 @@ public class Resource implements Serializable {
     private Long categoryId;
 
     @ApiModelProperty(value = "创建时间")
+    @TableField(value = "create_time")
     private Date createTime;
 
     @ApiModelProperty(value = "资源名称")
