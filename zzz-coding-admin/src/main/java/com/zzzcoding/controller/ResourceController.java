@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.ser.Serializers;
+import com.zzzcoding.component.DynamicSecurityMetadataSource;
 import com.zzzcoding.dto.ResourceParam;
 import com.zzzcoding.dto.BaseQueryParam;
 import com.zzzcoding.dto.ResourceQueryParam;
@@ -35,11 +36,20 @@ public class ResourceController {
     @Autowired
     private IResourceService resourceService;
 
+    @Autowired
+    private DynamicSecurityMetadataSource dynamicSecurityMetadataSource;
+
     @ApiOperation("Add resources")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public ResultObject<String> create(@RequestBody ResourceParam resourceParam) {
-        return ResultObject.success("success");
+    public ResultObject<String> create(@RequestBody Resource resourceParam) {
+        int count = resourceService.create(resourceParam);
+        dynamicSecurityMetadataSource.clearDatasource();
+        if (count > 0) {
+            return ResultObject.success("success");
+        } else {
+            return ResultObject.failed();
+        }
     }
 
     @ApiOperation("Resource list")
