@@ -1,5 +1,6 @@
 package com.zzzcoding.service.impl;
 
+import com.zzzcoding.dto.ResourceParam;
 import com.zzzcoding.mapper.ResourceMapper;
 import com.zzzcoding.model.Resource;
 import com.zzzcoding.service.IResourceService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,10 +23,28 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resourc
     @Autowired
     private IUsersCacheService usersCacheService;
 
+    @Autowired
+    private ResourceMapper resourceMapper;
+
     @Override
-    public boolean remove(Long resourceId) {
+    public int delete(Long resourceId) {
+        int count = resourceMapper.deleteByPrimaryKey(resourceId);
         usersCacheService.delResourceListByResourceId(resourceId);
-        return this.removeById(resourceId);
+        return count;
+    }
+
+    @Override
+    public int create(Resource resourceParam) {
+        resourceParam.setCreateTime(new Date());
+        return resourceMapper.insert(resourceParam);
+    }
+
+    @Override
+    public int update(Long resourceId, Resource resource) {
+        resource.setResourceId(resourceId);
+        int count = resourceMapper.updateByPrimaryKeySelective(resource);
+        usersCacheService.delResourceListByResourceId(resourceId);
+        return count;
     }
 }
 
