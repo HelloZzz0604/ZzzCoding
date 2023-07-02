@@ -17,4 +17,30 @@
         resource_id, category_id, create_time, name, url, description
     </sql>
 
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from resource where resource_id = #{id, jdbcType=BIGINT}
+    </delete>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.zzzcoding.model.Resource">
+        update resource
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="name != null">
+                name = #{name, jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url, jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description, jdbcType=VARCHAR},
+            </if>
+            <if test="resourceId != null">
+                category_id = #{categoryId, jdbcType=BIGINT},
+            </if>
+        </set>
+            where resource_id = #{resourceId, jdbcType=BIGINT}
+    </update>
+
 </mapper>

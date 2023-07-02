@@ -12,5 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2022-10-09
  */
 public interface ResourceMapper extends BaseMapper<Resource> {
+    int deleteByPrimaryKey(Long id);
 
+    int updateByPrimaryKeySelective(Resource resource);
 }

@@ -30,6 +30,7 @@ public class Resource implements Serializable {
     private Long resourceId;
 
     @ApiModelProperty(value = "资源分类ID")
+    @TableField("category_id")
     private Long categoryId;
 
     @ApiModelProperty(value = "创建时间")

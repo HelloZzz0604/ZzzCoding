@@ -27,15 +27,24 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resourc
     private ResourceMapper resourceMapper;
 
     @Override
-    public boolean remove(Long resourceId) {
+    public int delete(Long resourceId) {
+        int count = resourceMapper.deleteByPrimaryKey(resourceId);
         usersCacheService.delResourceListByResourceId(resourceId);
-        return this.removeById(resourceId);
+        return count;
     }
 
     @Override
     public int create(Resource resourceParam) {
         resourceParam.setCreateTime(new Date());
         return resourceMapper.insert(resourceParam);
+    }
+
+    @Override
+    public int update(Long resourceId, Resource resource) {
+        resource.setResourceId(resourceId);
+        int count = resourceMapper.updateByPrimaryKeySelective(resource);
+        usersCacheService.delResourceListByResourceId(resourceId);
+        return count;
     }
 }
 
