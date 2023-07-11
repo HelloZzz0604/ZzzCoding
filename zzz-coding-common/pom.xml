@@ -10,7 +10,6 @@
     <packaging>jar</packaging>
 
     <name>zzz-coding-common</name>
-    <description>zzzcoding common</description>
 
     <parent>
         <artifactId>zzz-coding</artifactId>
