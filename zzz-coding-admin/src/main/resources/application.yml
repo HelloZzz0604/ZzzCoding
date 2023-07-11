@@ -20,9 +20,9 @@ spring:
     time-zone: GMT+8
   datasource:
     username: root
-    password: root
+    password: xdfsuewkjdsr
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/codingmore?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+    url: jdbc:mysql://codingmore.caiyma8uj1lt.ap-southeast-2.rds.amazonaws.com:3306
 server:
   port: 8080
 
