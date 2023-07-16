@@ -3,6 +3,8 @@ spring:
 #    user:
 #      name: javaboy
 #      password: 123
+  application:
+    name: zzz-coding
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -18,11 +20,11 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-  datasource:
-    username: root
-    password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/codingmore?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+#  datasource:
+#    username: root
+#    password:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url:
 server:
   port: 8080
 
