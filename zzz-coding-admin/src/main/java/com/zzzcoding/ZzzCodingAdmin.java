@@ -13,6 +13,6 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 @SpringBootApplication
 public class ZzzCodingAdmin {
     public static void main(String[] args) {
-        SpringApplication.run(ZzzCodingAdmin.class);
+        SpringApplication.run(ZzzCodingAdmin.class, args);
     }
 }

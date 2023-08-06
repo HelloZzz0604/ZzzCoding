@@ -8,6 +8,7 @@ import com.zzzcoding.model.Users;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,4 +22,6 @@ import java.util.List;
 public interface UsersMapper extends BaseMapper<Users> {
     IPage<Users> findByPage(IPage<Users> page, @Param(Constants.WRAPPER) Wrapper<UsersPageQueryParam> wrapper);
     List<Users> selectByUsername(String username);
+
+    int updateLastLoginByUserLogin(String username, Date lastLogin);
 }

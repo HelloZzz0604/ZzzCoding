@@ -12,6 +12,7 @@ import com.zzzcoding.model.*;
 import com.zzzcoding.service.IUsersCacheService;
 import com.zzzcoding.service.IUsersService;
 import com.zzzcoding.util.JwtTokenUtil;
+import com.zzzcoding.webapi.BaseServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements IUsersService {
+public class UsersServiceImpl extends BaseServiceImpl<UsersMapper, Users> implements IUsersService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UsersServiceImpl.class);
 
     @Autowired
@@ -47,6 +48,9 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
 
     @Autowired
     private AdminRoleRelationMapper adminRoleRelationMapper;
+
+    @Autowired
+    private UsersMapper usersMapper;
 
     @Override
     public Users getAdminByUsername(String username) {
@@ -95,6 +99,7 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
             }
 
             token = jwtTokenUtil.generateToken(userDetails);
+            usersMapper.updateLastLoginByUserLogin(username, new Date());
         } catch ( AuthenticationException e) {
             LOGGER.warn("Login fails: {}", e.getMessage());
         }

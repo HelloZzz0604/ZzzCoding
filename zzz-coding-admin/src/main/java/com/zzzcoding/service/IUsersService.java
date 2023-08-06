@@ -5,6 +5,7 @@ import com.zzzcoding.dto.ResetPasswordParam;
 import com.zzzcoding.model.Resource;
 import com.zzzcoding.model.Role;
 import com.zzzcoding.model.Users;
+import com.zzzcoding.webapi.BaseService;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
  * @date 19/9/2022 10:48 pm
  */
 
-public interface IUsersService extends IService<Users>{
+public interface IUsersService extends BaseService<Users> {
     /**
      * 根据用户名获取管理后台用户
      * @param username

@@ -2,7 +2,6 @@ package com.zzzcoding.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -37,9 +36,9 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("API Documentatition")
+                .title("API Documentation")
                 .description("zzz learning")
-                .contact(new Contact("Wenjie Zhang", "test", "veggiezwj@gmail.com"))
+                .contact(new Contact("WENJIE ZHANG", "test", "veggiezwj@gmail.com"))
                 .version("1.0.0")
                 .build();
     }

@@ -1,5 +1,6 @@
 package com.zzzcoding.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.zzzcoding.dto.ResourceParam;
 import com.zzzcoding.mapper.ResourceMapper;
 import com.zzzcoding.model.Resource;
@@ -35,6 +36,9 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resourc
 
     @Override
     public int create(Resource resourceParam) {
+        if (StrUtil.isEmpty(resourceParam.getName()) || StrUtil.isEmpty(resourceParam.getUrl())) {
+            return -1;
+        }
         resourceParam.setCreateTime(new Date());
         return resourceMapper.insert(resourceParam);
     }
