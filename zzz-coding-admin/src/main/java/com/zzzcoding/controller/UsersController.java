@@ -1,15 +1,17 @@
 package com.zzzcoding.controller;
 
 import cn.hutool.core.collection.CollUtil;
-import com.zzzcoding.dto.ResetPasswordParam;
-import com.zzzcoding.dto.UsersLoginParam;
-import com.zzzcoding.dto.UsersParam;
-import com.zzzcoding.dto.UsersParamUpdate;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zzzcoding.dto.*;
 import com.zzzcoding.model.AdminUserDetails;
+import com.zzzcoding.model.Resource;
 import com.zzzcoding.model.Role;
 import com.zzzcoding.model.Users;
 import com.zzzcoding.service.IRoleService;
 import com.zzzcoding.service.IUsersService;
+import com.zzzcoding.webapi.CommonPage;
 import com.zzzcoding.webapi.ResultObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,10 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -81,11 +80,14 @@ public class UsersController {
     @ApiOperation(value = "Register")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public ResultObject<String> register(@Validated @RequestBody UsersParam users) {
+    public ResultObject register(@Validated @RequestBody UsersParam users) {
         Users userDto = new Users();
         userDto.setUserRegistered(new Date());
         BeanUtils.copyProperties(users, userDto);
-        return ResultObject.success(usersService.register(userDto) ? "success" : "fail");
+        if (!usersService.register(userDto)) {
+            return ResultObject.failed("User already exists.");
+        }
+        return ResultObject.success(userDto);
     }
 
     @ApiOperation(value = "Login and generate token")
@@ -95,7 +97,7 @@ public class UsersController {
         String token = usersService.login(users.getUserLogin(), users.getUserPass());
 
         if (token == null) {
-            return ResultObject.validateFailed("Username or password is not correct or this account is blocked.");
+            return ResultObject.failed("Username or password is not correct or this account is blocked.");
         }
 
         Map<String, String> tokenMap = new HashMap<>();
@@ -167,6 +169,18 @@ public class UsersController {
         } else {
             return ResultObject.failed();
         }
+    }
+
+    @ApiOperation(value = "Get User List")
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @ResponseBody
+    public ResultObject getUserList(BaseQueryParam baseQueryParam, @RequestParam(value = "userLogin", required = false) String userLogin) {
+        QueryWrapper<Users> userQueryWrapper = baseQueryParam.toBaseQueryWrapper();
+        if (StrUtil.isNotEmpty(userLogin)) {
+            userQueryWrapper.like("user_login", "%" + userLogin + "%");
+        }
+        Page<Users> pagination = new Page<>(baseQueryParam.getPage(), baseQueryParam.getPerPage());
+        return ResultObject.success(CommonPage.toPageResponse(usersService.page(pagination, userQueryWrapper)));
     }
 
     @ApiOperation(value = "log out")

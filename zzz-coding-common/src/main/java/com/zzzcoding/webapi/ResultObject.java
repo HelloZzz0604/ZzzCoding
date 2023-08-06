@@ -1,9 +1,12 @@
 package com.zzzcoding.webapi;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
  * @author Wenjie Zhang
  * @date 2/10/2022 3:57 pm
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResultObject<T> {
     /**
      * error code

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -31,6 +33,7 @@ public class Users implements Serializable {
     @ApiModelProperty(value = "登录名")
     private String userLogin;
 
+    @JsonIgnore
     @ApiModelProperty(value = "密码")
     private String userPass;
 
@@ -61,8 +64,9 @@ public class Users implements Serializable {
     @ApiModelProperty(value = "open_id")
     private String openId;
 
-    @ApiModelProperty(value = "属性")
+    @ApiModelProperty(value = "property")
     private String attribute;
 
-
+    @ApiModelProperty(value = "User last login")
+    private Date lastLogin;
 }

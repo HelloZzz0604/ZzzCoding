@@ -17,6 +17,7 @@
         <result column="user_type" property="userType" />
         <result column="open_id" property="openId" />
         <result column="attribute" property="attribute" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
+        <result column="last_login" property="lastLogin" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -35,4 +36,8 @@
     <select id="selectByUsername" resultType="com.zzzcoding.model.Users">
         select  DISTINCT <include refid="Base_Column_List_No_Password" />    from users c where c.username = #{queryParam.user_login}
     </select>
+
+    <update id="updateLastLoginByUserLogin" parameterType="com.zzzcoding.model.Users">
+        update users set last_login = #{lastLogin, jdbcType=TIMESTAMP} where user_login = #{username}
+    </update>
 </mapper>

@@ -42,6 +42,7 @@ secure:
   ignored:
     urls: #安全路径白名单
       - /doc.html
+      - /swagger-ui.html
       - /swagger-ui/**
       - /swagger/**
       - /swagger-resources/**
