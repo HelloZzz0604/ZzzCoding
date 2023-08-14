@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -19,7 +18,6 @@ public class UsersParamUpdate implements Serializable {
     private Long usersId;
 
     @ApiModelProperty(value = "nickname")
-    @NotBlank(message = "nickname cannot be null")
     private String userNickname;
 
     @ApiModelProperty(value = "email")
@@ -30,5 +28,8 @@ public class UsersParamUpdate implements Serializable {
 
     @ApiModelProperty(value = "user display name")
     private String displayName;
+
+    @ApiModelProperty(value = "user status")
+    private Integer userStatus;
 }
 

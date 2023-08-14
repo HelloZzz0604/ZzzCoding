@@ -73,7 +73,12 @@ public class UsersController {
 
         Users users = new Users();
         BeanUtils.copyProperties(usersParam, users);
-        return ResultObject.success(usersService.updateById(users) ? "success" : "fail");
+        if (usersService.updateById(users)) {
+            return ResultObject.success("Success");
+        } else {
+
+        }
+        return usersService.updateById(users) ? ResultObject.success("Success") : ResultObject.failed("Update failed.");
     }
 
 
