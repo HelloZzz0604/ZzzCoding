@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.lang.Nullable;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
