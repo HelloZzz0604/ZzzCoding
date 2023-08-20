@@ -8,11 +8,11 @@ public enum UserStatus {
     /**
      * Enable status
      */
-    ENABLE(0),
+    ENABLE(1),
     /**
      * Disable status
      */
-    DISABLED(1);
+    DISABLED(0);
 
     private int status;
 
