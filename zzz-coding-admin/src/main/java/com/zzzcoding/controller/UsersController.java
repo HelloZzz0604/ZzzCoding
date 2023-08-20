@@ -82,8 +82,8 @@ public class UsersController {
     }
 
 
-    @ApiOperation(value = "Register")
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @ApiOperation(value = "Add User")
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public ResultObject register(@Validated @RequestBody UsersParam users) {
         Users userDto = new Users();
