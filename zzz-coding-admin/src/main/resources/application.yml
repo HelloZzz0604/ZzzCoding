@@ -27,7 +27,8 @@ spring:
 #    url:
 server:
   port: 8080
-
+  error:
+    include-stacktrace: never
 mybatis-plus:
   mapper-locations:
     - classpath:dao/*.xml
