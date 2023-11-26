@@ -20,7 +20,11 @@
     </sql>
 
     <update id="updateBannerStatus">
-        update banner set status = #{status} where banner_id = #{bannerId}
+        update banner set status = #{status}, updated_at = #{updatedAt} where banner_id = #{bannerId}
     </update>
+
+    <select id="getBannerList" resultType="com.zzzcoding.model.Banner">
+        select * from banner where status = 1 order by sort desc;
+    </select>
 
 </mapper>
