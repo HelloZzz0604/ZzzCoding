@@ -12,7 +12,6 @@ import com.zzzcoding.service.IBannerService;
 import com.zzzcoding.webapi.CommonPage;
 import com.zzzcoding.webapi.ResultObject;
 import io.swagger.annotations.Api;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +19,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Description: Controller for all banner related
@@ -42,7 +43,7 @@ public class BannerController {
     public ResultObject list(BaseQueryParam baseQueryParam, @RequestParam(value = "title", required = false) String title) {
         QueryWrapper<Banner> bannerQueryWrapper = baseQueryParam.toBaseQueryWrapper();
         if (StrUtil.isNotEmpty(title)) {
-            bannerQueryWrapper.eq("title", title);
+            bannerQueryWrapper.like("title", title);
         }
         Page<Banner> pagination = new Page<>(baseQueryParam.getPage(), baseQueryParam.getPerPage());
         return ResultObject.success(CommonPage.toPageResponse(bannerService.page(pagination, bannerQueryWrapper)));
@@ -64,8 +65,11 @@ public class BannerController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public ResultObject updateBannerStatus(@RequestBody BannerUpdateParam bannerUpdateParam) {
-        if (bannerMapper.updateBannerStatus(bannerUpdateParam.getBannerId(), bannerUpdateParam.getStatus()) > 0) {
-            return ResultObject.success("Success");
+        Date currentDate = new Date();
+        if (bannerMapper.updateBannerStatus(bannerUpdateParam.getBannerId(), currentDate, bannerUpdateParam.getStatus()) > 0) {
+            Map<String, Date> resultMap =  new HashMap<>();
+            resultMap.put("updatedAt", currentDate);
+            return ResultObject.success(resultMap);
         } else {
             return ResultObject.failed("Fail");
         }

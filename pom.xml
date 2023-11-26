@@ -14,6 +14,7 @@
         <module>zzz-coding-mbg</module>
         <module>zzz-coding-common</module>
         <module>zzz-coding-security</module>
+        <module>zzz-coding-portal</module>
     </modules>
 
     <parent>

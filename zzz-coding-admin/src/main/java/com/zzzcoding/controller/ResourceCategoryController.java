@@ -1,13 +1,11 @@
 package com.zzzcoding.controller;
 
 
-import com.zzzcoding.dto.BaseQueryParam;
 import com.zzzcoding.model.ResourceCategory;
 import com.zzzcoding.service.IResourceCategoryService;
 import com.zzzcoding.webapi.ResultObject;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;

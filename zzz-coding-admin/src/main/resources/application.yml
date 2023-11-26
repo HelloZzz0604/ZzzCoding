@@ -19,7 +19,7 @@ spring:
       max-file-size: 10MB
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
+    time-zone: GMT+10
 #  datasource:
 #    username: root
 #    password:

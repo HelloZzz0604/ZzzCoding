@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: zzz-coding-portal
+  profiles:
+    active: dev
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+10

@@ -2,6 +2,7 @@ package com.zzzcoding.service;
 
 import com.zzzcoding.model.Banner;
 import com.zzzcoding.webapi.BaseService;
+import org.springframework.stereotype.Service;
 
 /**
  * Description: Banner Service
