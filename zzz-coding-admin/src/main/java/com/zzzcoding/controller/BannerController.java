@@ -29,7 +29,7 @@ import java.util.Map;
  * @Date: 29/8/2023 12:44 am
  */
 @Controller
-@Api(tags="Banner")
+@Api(tags = "Banner")
 @RequestMapping("/banner")
 public class BannerController {
     @Autowired
@@ -67,7 +67,7 @@ public class BannerController {
     public ResultObject updateBannerStatus(@RequestBody BannerUpdateParam bannerUpdateParam) {
         Date currentDate = new Date();
         if (bannerMapper.updateBannerStatus(bannerUpdateParam.getBannerId(), currentDate, bannerUpdateParam.getStatus()) > 0) {
-            Map<String, Date> resultMap =  new HashMap<>();
+            Map<String, Date> resultMap = new HashMap<>();
             resultMap.put("updatedAt", currentDate);
             return ResultObject.success(resultMap);
         } else {
