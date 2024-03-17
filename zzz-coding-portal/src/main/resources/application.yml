@@ -9,7 +9,8 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+10
-
+server:
+  port: 8090
 jwt:
   tokenHeader: Authorization #JWT存储的请求头
   secret: zzz-portal-secret #JWT加解密使用的密钥
