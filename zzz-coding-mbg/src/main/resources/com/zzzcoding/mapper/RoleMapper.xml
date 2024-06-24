@@ -15,27 +15,23 @@
     <sql id="Base_Column_List">
         role_id, name, description, create_time, status
     </sql>
-
     <select id="getMenuList" resultType="com.zzzcoding.model.Menu">
-        SELECT
-            m.menu_id menuId,
-            m.parent_id parentId,
-            m.create_time createTime,
-            m.title title,
-            m.level level,
-            m.sort sort,
-            m.name name,
-            m.icon icon,
-            m.hidden hidden,
-            m.path path
-        FROM
-            admin_role_relation arr
-                LEFT JOIN role r ON arr.role_id = r.role_id
-                LEFT JOIN role_menu_relation rmr ON r.role_id = rmr.role_id
-                LEFT JOIN menu m ON rmr.menu_id = m.menu_id
-        WHERE
-            arr.users_id = #{usersId}
-            AND m.menu_id IS NOT NULL
+        SELECT m.menu_id     menuId,
+               m.parent_id   parentId,
+               m.create_time createTime,
+               m.title       title,
+               m.level       level,
+               m.sort        sort,
+               m.name        name,
+               m.icon        icon,
+               m.hidden      hidden,
+               m.path        path
+        FROM admin_role_relation arr
+                 LEFT JOIN role r ON arr.role_id = r.role_id
+                 LEFT JOIN role_menu_relation rmr ON r.role_id = rmr.role_id
+                 LEFT JOIN menu m ON rmr.menu_id = m.menu_id
+        WHERE arr.users_id = #{usersId}
+          AND m.menu_id IS NOT NULL
         GROUP BY m.menu_id
     </select>
 </mapper>

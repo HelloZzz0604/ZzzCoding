@@ -56,7 +56,7 @@ secure:
       - /actuator/**
       - /druid/**
       - /admin/login
-      - /admin/register
+      - /admin/add
       - /admin/info
       - /minio/upload
 jwt:

@@ -10,7 +10,10 @@ import com.zzzcoding.model.Resource;
 import com.zzzcoding.model.Role;
 import com.zzzcoding.model.Users;
 import com.zzzcoding.service.IRoleService;
+import com.zzzcoding.service.IUsersCacheService;
 import com.zzzcoding.service.IUsersService;
+import com.zzzcoding.service.impl.UsersCacheServiceImpl;
+import com.zzzcoding.util.JwtTokenUtil;
 import com.zzzcoding.webapi.CommonPage;
 import com.zzzcoding.webapi.ResultObject;
 import io.swagger.annotations.Api;
@@ -52,6 +55,12 @@ public class UsersController {
 
     @Autowired
     private IRoleService roleService;
+
+    @Autowired
+    private IUsersCacheService usersCacheService;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @ApiOperation("get users by id")
     @RequestMapping(value = "/getById", method = RequestMethod.GET)
@@ -104,6 +113,7 @@ public class UsersController {
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
+        usersCacheService.setAdminToken(users.getUserLogin(), token);
         return ResultObject.success(tokenMap);
     }
 
@@ -187,7 +197,14 @@ public class UsersController {
     @ApiOperation(value = "log out")
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     @ResponseBody
-    public ResultObject logout() {
-        return ResultObject.success(null);
+    public ResultObject logout(@RequestHeader("Authorization") String token) {
+        String tokenBody = token.substring(this.tokenHead.length());
+        String username = jwtTokenUtil.getUserNameFromToken(tokenBody);
+
+        if (token != null && token.startsWith(this.tokenHead)) {
+            usersCacheService.delAdminTokenByUsername(username, tokenBody);
+            return ResultObject.success("Logged out successfully.");
+        }
+        return ResultObject.failed("Invalid Token");
     }
 }

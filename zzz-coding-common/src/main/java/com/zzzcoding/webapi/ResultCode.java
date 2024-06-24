@@ -11,7 +11,7 @@ public enum ResultCode implements IErrorCode {
     SUCCESS(0, "Success"),
     FAILED(500, "Failed"),
     VALIDATE_FAILED(506, "Validate failed"),
-    UNAUTHORIZED(401, "Token is expired"),
+    UNAUTHORIZED(401, "Token is invalid, please try again."),
     FORBIDDEN(403, "Forbidden");
     private long code;
     private String message;

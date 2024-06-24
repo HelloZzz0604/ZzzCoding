@@ -47,6 +47,10 @@ public class ResultObject<T> {
         return new ResultObject<T>(errorCode.getCode(), errorCode.getMessage(), null);
     }
 
+    public static <T> ResultObject<T> failed(long code, String message) {
+        return new ResultObject<T>(code, message, null);
+    }
+
     public static <T> ResultObject<T> failed(String message) {
         return new ResultObject<T>(ResultCode.FAILED.getCode(), message, null);
     }

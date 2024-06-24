@@ -54,6 +54,11 @@ public interface IUsersCacheService {
     void setAdminUser(Users users);
 
     /**
+     * set admin token
+     */
+    void setAdminToken(String username, String token);
+
+    /**
      * get resource list
      * @param usersId
      * @return
@@ -66,4 +71,16 @@ public interface IUsersCacheService {
      * @param resourceList
      */
     void setResourceList(Long adminId, List<Resource> resourceList);
+
+    /**
+     * get token
+     * @param username
+     */
+    String getAdminTokenByUsername(String username);
+
+    /**
+     * delete admin token by username
+     * @param token
+     */
+    void delAdminTokenByUsername(String username, String token);
 }

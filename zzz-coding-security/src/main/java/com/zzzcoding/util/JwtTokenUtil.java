@@ -1,11 +1,14 @@
 package com.zzzcoding.util;
 
 import cn.hutool.core.date.DateUtil;
+import com.zzzcoding.assist.RedisConstants;
+import com.zzzcoding.service.IRedisService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
@@ -26,10 +29,15 @@ public class JwtTokenUtil {
 
     @Value("${jwt.secret}")
     private String secret;
+
     @Value("${jwt.expiration}")
     private Long expiration;
+
     @Value("${jwt.tokenHead}")
     private String tokenHead;
+
+    @Autowired
+    private IRedisService redisService;
 
     /**
      * 根据用户名，secret生成token
@@ -89,9 +97,14 @@ public class JwtTokenUtil {
         return expiredDate.before(new Date());
     }
 
+    private boolean isTokenInRedis(String username, String token) {
+        String key = RedisConstants.getAdminTokenKey(username) + token;
+        return redisService.get(key) != null;
+    }
+
     public boolean validateToken(String token, UserDetails userDetails) {
         String username = getUserNameFromToken(token);
-        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token) && isTokenInRedis(username, token);
     }
 
     public String generateToken(UserDetails userDetails) {
@@ -120,7 +133,7 @@ public class JwtTokenUtil {
             return null;
         }
 
-        if (tokenRefreshJustBefore(token, 30 * 60)) {
+        if (tokenRefreshJustBefore(token)) {
             return token;
         } else {
             claims.put(CLAIM_KEY_CREATED, new Date());
@@ -128,13 +141,10 @@ public class JwtTokenUtil {
         }
     }
 
-    private boolean tokenRefreshJustBefore(String token, int time) {
+    private boolean tokenRefreshJustBefore(String token) {
         Claims claims = getClaimsFromToken(token);
         Date created = claims.get(CLAIM_KEY_CREATED, Date.class);
         Date refreshDate = new Date();
-        if (refreshDate.after(created) && refreshDate.before(DateUtil.offsetSecond(created, time))) {
-            return true;
-        }
-        return false;
+        return refreshDate.after(created) && refreshDate.before(DateUtil.offsetSecond(created, 1800));
     }
 }

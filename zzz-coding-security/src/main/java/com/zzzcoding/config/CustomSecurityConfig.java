@@ -21,14 +21,19 @@ public class CustomSecurityConfig{
 
     @Autowired
     private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
+
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
     @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+
     @Autowired
     private IgnoreUrlsConfig ignoreUrlsConfig;
+
     @Autowired(required = false)
     private DynamicSecurityFilter dynamicSecurityFilter;
+
     @Autowired(required = false)
     private DynamicSecurityService dynamicSecurityService;
 

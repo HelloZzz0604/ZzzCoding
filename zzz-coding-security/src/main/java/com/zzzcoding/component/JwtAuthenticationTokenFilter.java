@@ -2,6 +2,7 @@ package com.zzzcoding.component;
 
 
 import cn.hutool.json.JSONUtil;
+import com.zzzcoding.service.IRedisService;
 import com.zzzcoding.util.JwtTokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -101,6 +101,21 @@ public class UsersCacheServiceImpl implements IUsersCacheService {
     }
 
     @Override
+    public void setAdminToken(String username, String token) {
+        redisService.set(RedisConstants.getAdminTokenKey(username) + token, token, RedisConstants.REDIS_EXPIRE);
+    }
+
+    @Override
+    public String getAdminTokenByUsername(String username) {
+        return (String) redisService.get(RedisConstants.getAdminTokenKey(username));
+    }
+
+    @Override
+    public void delAdminTokenByUsername(String username, String token) {
+        redisService.del(RedisConstants.getAdminTokenKey(username) + token);
+    }
+
+    @Override
     public List<Resource> getResourceListByUserId(Long usersId){
         return (List<Resource>) redisService.get(RedisConstants.getAdminResourceKey(usersId));
     }

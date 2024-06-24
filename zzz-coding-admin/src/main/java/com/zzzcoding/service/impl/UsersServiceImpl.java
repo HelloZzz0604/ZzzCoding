@@ -86,8 +86,8 @@ public class UsersServiceImpl extends BaseServiceImpl<UsersMapper, Users> implem
     public String login(String username, String password) {
         String token = null;
 
+        UserDetails userDetails = loadUserByUsername(username);
         try {
-            UserDetails userDetails = loadUserByUsername(username);
 
             if (!passwordEncoder.matches(password, userDetails.getPassword())) {
                 Asserts.fail("Password is not correct.");
@@ -119,7 +119,7 @@ public class UsersServiceImpl extends BaseServiceImpl<UsersMapper, Users> implem
     @Override
     public List<Resource> getResourceList(Long adminId) {
         log.info("Get resource by admin {}", adminId);
-        List<Resource> resourceList = usersCacheService.getResourceListByUserId(adminId);
+         List<Resource> resourceList = usersCacheService.getResourceListByUserId(adminId);
 
         log.info("Redis user role is {}", resourceList);
         if (CollUtil.isNotEmpty(resourceList)) {

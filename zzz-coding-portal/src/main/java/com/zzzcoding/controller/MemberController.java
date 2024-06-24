@@ -1,5 +1,7 @@
 package com.zzzcoding.controller;
 
+import com.zzzcoding.exception.Asserts;
+import com.zzzcoding.mapper.MemberMapper;
 import com.zzzcoding.model.Member;
 import com.zzzcoding.service.IMemberService;
 import com.zzzcoding.webapi.ResultObject;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/account")
 public class MemberController {
+    @Autowired
+    private MemberMapper memberMapper;
 
     @Autowired
     private IMemberService memberService;
@@ -25,6 +29,10 @@ public class MemberController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
     public ResultObject register(@Validated @RequestBody Member member) {
+        int count = memberMapper.selectByEmail(member.getEmail()).size();
+        if (count > 0) {
+            return ResultObject.failed(80000, "This email is already taken. Please try another one");
+        }
         memberService.register(member.getEmail(), member.getUsername(), member.getPassword());
         return ResultObject.success("success");
     }
