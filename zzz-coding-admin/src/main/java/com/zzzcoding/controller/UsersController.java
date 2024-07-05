@@ -77,13 +77,13 @@ public class UsersController {
     @ResponseBody
     public ResultObject<String> update(@Validated @RequestBody UsersParamUpdate usersParam) {
         if (usersParam.getUsersId() == null) {
-            return ResultObject.failed("ID cannot be null");
+            return ResultObject.failed(10001, "ID cannot be null.");
         }
 
         Users users = new Users();
         BeanUtils.copyProperties(usersParam, users);
 
-        return usersService.updateById(users) ? ResultObject.success("Success") : ResultObject.failed("Update failed.");
+        return usersService.updateById(users) ? ResultObject.success("Success") : ResultObject.failed(10002, "Update failed.");
     }
 
 
@@ -95,7 +95,7 @@ public class UsersController {
         userDto.setUserRegistered(new Date());
         BeanUtils.copyProperties(users, userDto);
         if (!usersService.register(userDto)) {
-            return ResultObject.failed("User already exists.");
+            return ResultObject.failed(10003, "User already exists.");
         }
         return ResultObject.success(userDto);
     }
@@ -107,7 +107,7 @@ public class UsersController {
         String token = usersService.login(users.getUserLogin(), users.getUserPass());
 
         if (token == null) {
-            return ResultObject.failed("Username or password is not correct or this account is blocked.");
+            return ResultObject.failed(10004, "Username or password is not correct or this account is blocked.");
         }
 
         Map<String, String> tokenMap = new HashMap<>();
@@ -125,7 +125,7 @@ public class UsersController {
         String refreshToken = usersService.refreshToken(token);
 
         if (refreshToken == null) {
-            return ResultObject.failed("Token is expired. Please re-login.");
+            return ResultObject.failed(10005, "Token is expired. Please re-login.");
         }
 
         Map<String, String> tokenMap = new HashMap<>();
@@ -201,7 +201,7 @@ public class UsersController {
         String tokenBody = token.substring(this.tokenHead.length());
         String username = jwtTokenUtil.getUserNameFromToken(tokenBody);
 
-        if (token != null && token.startsWith(this.tokenHead)) {
+        if (token.startsWith(this.tokenHead)) {
             usersCacheService.delAdminTokenByUsername(username, tokenBody);
             return ResultObject.success("Logged out successfully.");
         }
