@@ -27,7 +27,7 @@ public class AdminRoleRelation implements Serializable {
     private Long adminRoleRelationId;
 
     @ApiModelProperty(value = "用户id")
-    private Long usersId;
+    private Long userId;
 
     @ApiModelProperty(value = "角色id")
     private Long roleId;

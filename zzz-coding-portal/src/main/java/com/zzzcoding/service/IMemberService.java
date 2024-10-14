@@ -1,6 +1,7 @@
 package com.zzzcoding.service;
 
 import com.zzzcoding.model.Member;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -12,4 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 public interface IMemberService {
     @Transactional
     void register(String email, String username, String password);
+
+    String login(String email, String password);
+
+    UserDetails loadUserByUsername(String username);
 }

@@ -30,7 +30,7 @@
                  LEFT JOIN role r ON arr.role_id = r.role_id
                  LEFT JOIN role_menu_relation rmr ON r.role_id = rmr.role_id
                  LEFT JOIN menu m ON rmr.menu_id = m.menu_id
-        WHERE arr.users_id = #{usersId}
+        WHERE arr.user_id = #{userId}
           AND m.menu_id IS NOT NULL
         GROUP BY m.menu_id
     </select>

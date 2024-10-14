@@ -20,9 +20,9 @@ import java.util.List;
 public interface AdminRoleRelationMapper extends BaseMapper<AdminRoleRelation> {
     int insertList(@Param("list")List<AdminRoleRelation> adminRoleRelationList);
 
-    List<Resource> getResourceList(@Param("usersId") Long usersId);
+    List<Resource> getResourceList(@Param("userId") Long userId);
 
     List<Long> getAdminIdList(@Param("resourceId") Long resourceId);
 
-    List<Role> getRoleList(@Param("usersId") Long usersId);
+    List<Role> getRoleList(@Param("userId") Long userId);
 }

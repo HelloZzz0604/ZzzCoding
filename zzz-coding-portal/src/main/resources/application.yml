@@ -16,12 +16,22 @@ jwt:
   secret: zzz-portal-secret #JWT加解密使用的密钥
   expiration: 604800 #JWT的超期限时间(60*60*24*7)
   tokenHead: 'Bearer '  #JWT负载中拿到开头
-
+mybatis-plus:
+  mapper-locations:
+    - classpath:dao/*.xml
+    - classpath*:com/**/mapper/*.xml
+  global-config:
+    db-config:
+      table-underline: true
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 secure:
   ignored:
     urls:
       - /home/**
-      - /account/register
+      - /member/register
+      - /member/login
 
 mybatis:
   mapper-locations:

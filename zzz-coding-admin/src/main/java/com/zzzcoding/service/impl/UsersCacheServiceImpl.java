@@ -59,7 +59,7 @@ public class UsersCacheServiceImpl implements IUsersCacheService {
 
         if (CollUtil.isNotEmpty(relations)) {
             List<String> keys = relations.stream().map(
-                    relation -> RedisConstants.getAdminResourceKey(relation.getUsersId())
+                    relation -> RedisConstants.getAdminResourceKey(relation.getUserId())
             ).collect(Collectors.toList());
             log.info("Redis delete keys {}", keys);
             redisService.del(keys);
@@ -73,7 +73,7 @@ public class UsersCacheServiceImpl implements IUsersCacheService {
         List<AdminRoleRelation> relations = adminRoleRelationMapper.selectList(queryWrapper);
         if (CollUtil.isNotEmpty(relations)) {
             List<String> keys = relations.stream().map(
-                    relation -> RedisConstants.getAdminResourceKey(relation.getUsersId())
+                    relation -> RedisConstants.getAdminResourceKey(relation.getUserId())
             ).collect(Collectors.toList());
             redisService.del(keys);
         }
@@ -116,8 +116,8 @@ public class UsersCacheServiceImpl implements IUsersCacheService {
     }
 
     @Override
-    public List<Resource> getResourceListByUserId(Long usersId){
-        return (List<Resource>) redisService.get(RedisConstants.getAdminResourceKey(usersId));
+    public List<Resource> getResourceListByUserId(Long userId){
+        return (List<Resource>) redisService.get(RedisConstants.getAdminResourceKey(userId));
     }
 
     @Override

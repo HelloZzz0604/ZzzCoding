@@ -17,9 +17,10 @@
         id, email, username, password, status, create_time, avatar, description
     </sql>
 
-    <select id="selectByEmail" resultMap="BaseResultMap">
-        select * from member where email = #{email}
+    <select id="selectByEmailOrUsername" resultMap="BaseResultMap">
+        select * from member where email = #{loginValue} or username = #{loginValue}
     </select>
+
     <insert id="insert" parameterType="com.zzzcoding.model.Member">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()

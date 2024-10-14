@@ -16,5 +16,5 @@ import java.util.List;
  * @since 2022-11-29
  */
 public interface RoleMapper extends BaseMapper<Role> {
-    List<Menu> getMenuList(@Param("usersId") Long usersId);
+    List<Menu> getMenuList(@Param("userId") Long userId);
 }

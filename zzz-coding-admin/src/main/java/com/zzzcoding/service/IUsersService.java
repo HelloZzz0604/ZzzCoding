@@ -67,7 +67,7 @@ public interface IUsersService extends BaseService<Users> {
      */
     List<Role> getRoleList(Long adminId);
 
-    boolean removeUser(Long usersId);
+    boolean removeUser(Long userId);
 
     int resetPassword(ResetPasswordParam resetPasswordParam);
 }

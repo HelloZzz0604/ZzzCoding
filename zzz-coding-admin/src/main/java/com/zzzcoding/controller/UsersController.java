@@ -65,8 +65,8 @@ public class UsersController {
     @ApiOperation("get users by id")
     @RequestMapping(value = "/getById", method = RequestMethod.GET)
     @ResponseBody
-    public ResultObject<Users> getById(Long usersId) {
-        Users users = usersService.getById(usersId);
+    public ResultObject<Users> getById(Long userId) {
+        Users users = usersService.getById(userId);
 
         users.setUserPass(null);
         return ResultObject.success(users);
@@ -76,8 +76,8 @@ public class UsersController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public ResultObject<String> update(@Validated @RequestBody UsersParamUpdate usersParam) {
-        if (usersParam.getUsersId() == null) {
-            return ResultObject.failed(10001, "ID cannot be null.");
+        if (usersParam.getUserId() == null) {
+            return ResultObject.failed(10001, "The given data is invalid.");
         }
 
         Users users = new Users();
@@ -149,9 +149,9 @@ public class UsersController {
 
         data.put("userDetail", adminUserDetails.getUsers());
         data.put("username", users.getUserLogin());
-        data.put("menus", roleService.getMenuListByRole(users.getUsersId()));
+        data.put("menus", roleService.getMenuListByRole(users.getUserId()));
 
-        List<Role> roleList = usersService.getRoleList(users.getUsersId());
+        List<Role> roleList = usersService.getRoleList(users.getUserId());
         if (CollUtil.isNotEmpty(roleList)) {
             List<String> roles = roleList.stream().map(Role::getName).collect(Collectors.toList());
             data.put("roles", roles);
@@ -162,8 +162,11 @@ public class UsersController {
     @ApiOperation(value = "delete user by id")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public ResultObject<String> delete(long usersId) {
-        return ResultObject.success(usersService.removeUser(usersId) ? "success" : "fail");
+    public ResultObject<String> delete(long userId) {
+        if (!usersService.removeById(userId)) {
+            return ResultObject.failed(10006, "The user is failed to delete");
+        }
+        return ResultObject.success("success");
     }
 
     @ApiOperation(value = "Reset Password")
@@ -174,9 +177,9 @@ public class UsersController {
         if (status == 1) {
             return ResultObject.success("success");
         } else if (status == -1) {
-            return ResultObject.failed("Invalid Parameter");
+            return ResultObject.failed(10001, "The given data is invalid.");
         } else if (status == -3) {
-            return ResultObject.failed("Your old password is not correct.");
+            return ResultObject.failed(10007, "The old password is not correct.");
         } else {
             return ResultObject.failed();
         }
@@ -205,6 +208,7 @@ public class UsersController {
             usersCacheService.delAdminTokenByUsername(username, tokenBody);
             return ResultObject.success("Logged out successfully.");
         }
-        return ResultObject.failed("Invalid Token");
+
+        return ResultObject.failed(10008, "Invalid token.");
     }
 }

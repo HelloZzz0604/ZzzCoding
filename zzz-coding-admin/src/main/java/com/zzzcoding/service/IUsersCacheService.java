@@ -18,9 +18,9 @@ public interface IUsersCacheService {
 
     /**
      * delete by user
-     * @param usersId
+     * @param userId
      */
-    void delResourceListByUserId(Long usersId);
+    void delResourceListByUserId(Long userId);
 
     /**
      * delete by role
@@ -60,10 +60,10 @@ public interface IUsersCacheService {
 
     /**
      * get resource list
-     * @param usersId
+     * @param userId
      * @return
      */
-    List<Resource> getResourceListByUserId(Long usersId);
+    List<Resource> getResourceListByUserId(Long userId);
 
     /**
      * set resource list

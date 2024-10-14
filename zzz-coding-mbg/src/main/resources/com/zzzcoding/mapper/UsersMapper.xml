@@ -4,7 +4,7 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.zzzcoding.model.Users">
-        <id column="users_id" property="id" />
+        <id column="user_id" property="id" />
         <result column="user_login" property="userLogin" />
         <result column="user_pass" property="userPass" />
         <result column="user_nickname" property="userNickname" />
@@ -22,15 +22,15 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        users_id, user_login, user_pass, user_nicename, user_email, user_url, user_registered, user_activation_key, user_status, display_name, user_type,open_id,attribute
+        user_id, user_login, user_pass, user_nicename, user_email, user_url, user_registered, user_activation_key, user_status, display_name, user_type,open_id,attribute
     </sql>
 
     <sql id="Base_Column_List_No_Password">
-        c.users_id, user_login, user_nicename, user_email, user_url, user_registered, user_activation_key, user_status, display_name, user_type,open_id,attribute
+        c.user_id, user_login, user_nicename, user_email, user_url, user_registered, user_activation_key, user_status, display_name, user_type,open_id,attribute
     </sql>
 
     <select id="findByPage" resultType="com.zzzcoding.model.Users">
-        select  DISTINCT <include refid="Base_Column_List_No_Password" />    from users c left join admin_role_relation b  on c.users_id = b.users_id ${ew.customSqlSegment}
+        select  DISTINCT <include refid="Base_Column_List_No_Password" />    from users c left join admin_role_relation b  on c.user_id = b.user_id ${ew.customSqlSegment}
     </select>
 
     <select id="selectByUsername" resultType="com.zzzcoding.model.Users">
