@@ -20,7 +20,6 @@ public class ResultObject<T> {
      * result
      */
     private T result;
-    protected ResultObject() {}
 
     protected ResultObject(long code, String message, T result) {
         this.code = code;

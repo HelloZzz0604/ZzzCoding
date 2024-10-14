@@ -26,9 +26,9 @@ public class Users implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "users_id")
-    @TableId(value = "users_id", type = IdType.AUTO)
-    private Long usersId;
+    @ApiModelProperty(value = "user_id")
+    @TableId(value = "user_id", type = IdType.AUTO)
+    private Long userId;
 
     @ApiModelProperty(value = "登录名")
     private String userLogin;

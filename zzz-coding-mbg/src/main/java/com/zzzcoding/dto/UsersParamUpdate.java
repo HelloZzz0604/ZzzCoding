@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class UsersParamUpdate implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Long usersId;
+    private Long userId;
 
     @ApiModelProperty(value = "nickname")
     private String userNickname;

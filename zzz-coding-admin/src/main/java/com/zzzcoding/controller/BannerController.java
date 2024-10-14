@@ -56,7 +56,7 @@ public class BannerController {
         bannerDto.setCreatedAt(new Date());
         BeanUtils.copyProperties(banner, bannerDto);
         if (!bannerService.createBanner(bannerDto)) {
-            return ResultObject.failed("Banner already exists");
+            return ResultObject.failed(10012, "Banner already exists.");
         }
 
         return ResultObject.success(bannerDto);
@@ -71,7 +71,7 @@ public class BannerController {
             resultMap.put("updatedAt", currentDate);
             return ResultObject.success(resultMap);
         } else {
-            return ResultObject.failed("Fail");
+            return ResultObject.failed(10013, "Banner update failed.");
         }
     }
 }

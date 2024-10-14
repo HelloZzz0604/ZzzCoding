@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.zzzcoding.model.AdminRoleRelation">
         <id column="admin_role_relation_id" property="adminRoleRelationId" />
-        <result column="users_id" property="usersId" />
+        <result column="user_id" property="userId" />
         <result column="role_id" property="roleId" />
     </resultMap>
 
@@ -15,9 +15,9 @@
     </sql>
 
     <insert id="insertList">
-        INSERT INTO admin_role_relation (users_id, role_id) VALUES
+        INSERT INTO admin_role_relation (user_id, role_id) VALUES
         <foreach collection="list" separator="," item="item" index="index">
-            (#{item.usersId,jdbcType=BIGINT},
+            (#{item.userId,jdbcType=BIGINT},
             #{item.roleId,jdbcType=BIGINT})
         </foreach>
     </insert>
@@ -25,7 +25,7 @@
     <select id="getRoleList"  resultType="com.zzzcoding.model.Role">
         select r.*
         from admin_role_relation ar left join role r on ar.role_id = r.role_id
-        where ar.users_id = #{usersId}
+        where ar.user_id = #{userId}
     </select>
 
 
@@ -43,7 +43,7 @@
                 LEFT JOIN role_resource_relation rrr ON r.role_id = rrr.role_id
                 LEFT JOIN resource ur ON ur.resource_id = rrr.resource_id
         WHERE
-            ar.users_id = #{usersId}
+            ar.user_id = #{userId}
           AND ur.resource_id IS NOT NULL
         GROUP BY
             ur.resource_id

@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zzzcoding.dto.ResetPasswordParam;
+import com.zzzcoding.exception.ApiException;
 import com.zzzcoding.exception.Asserts;
 import com.zzzcoding.mapper.AdminRoleRelationMapper;
 import com.zzzcoding.mapper.UsersMapper;
@@ -12,13 +13,13 @@ import com.zzzcoding.service.IUsersCacheService;
 import com.zzzcoding.service.IUsersService;
 import com.zzzcoding.util.JwtTokenUtil;
 import com.zzzcoding.webapi.BaseServiceImpl;
+import com.zzzcoding.webapi.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.zzzcoding.state.UserType;
 import com.zzzcoding.state.UserStatus;
@@ -61,7 +62,7 @@ public class UsersServiceImpl extends BaseServiceImpl<UsersMapper, Users> implem
             return usersList.get(0);
         }
 
-        throw new UsernameNotFoundException("The username is wrong.");
+        throw new ApiException(ResultCode.USER_NOT_FOUND);
     }
 
     @Override
@@ -90,11 +91,11 @@ public class UsersServiceImpl extends BaseServiceImpl<UsersMapper, Users> implem
         try {
 
             if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-                Asserts.fail("Password is not correct.");
+                Asserts.fail(ResultCode.PASSWORD_INCORRECT);
             }
 
             if (!userDetails.isEnabled()) {
-                Asserts.fail("The account is disabled.");
+                Asserts.fail(ResultCode.ACCOUNT_DISABLED);
             }
 
             token = jwtTokenUtil.generateToken(userDetails);
@@ -110,10 +111,10 @@ public class UsersServiceImpl extends BaseServiceImpl<UsersMapper, Users> implem
     public UserDetails loadUserByUsername(String username) {
         Users admin = getAdminByUsername(username);
         if (admin != null) {
-            List<Resource> resourceList = getResourceList(admin.getUsersId());
+            List<Resource> resourceList = getResourceList(admin.getUserId());
             return new AdminUserDetails(admin, resourceList);
         }
-        throw new UsernameNotFoundException("Username or password is incorrect.");
+        throw new ApiException(ResultCode.USER_NOT_FOUND);
     }
 
     @Override
@@ -162,7 +163,7 @@ public class UsersServiceImpl extends BaseServiceImpl<UsersMapper, Users> implem
         String newPassword = passwordEncoder.encode(resetPasswordParam.getNewPassword());
         users.setUserPass(newPassword);
         baseMapper.updateById(users);
-        usersCacheService.delAdminUserByUserId(users.getUsersId());
+        usersCacheService.delAdminUserByUserId(users.getUserId());
         return 1;
     }
 }

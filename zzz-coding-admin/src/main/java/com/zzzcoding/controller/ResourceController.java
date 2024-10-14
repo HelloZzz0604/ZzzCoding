@@ -1,12 +1,9 @@
 package com.zzzcoding.controller;
 
-
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.zzzcoding.component.DynamicSecurityMetadataSource;
-import com.zzzcoding.dto.ResourceParam;
 import com.zzzcoding.dto.BaseQueryParam;
 import com.zzzcoding.dto.ResourceQueryParam;
 import com.zzzcoding.model.Resource;
@@ -19,13 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
-import java.util.List;
-
 
 /**
- * <p>
  * 后台资源表 前端控制器
- * </p>
  *
  * @author Wenjie Zhang
  * @since 2022-10-09
@@ -48,7 +41,7 @@ public class ResourceController {
         if (count > 0) {
             return ResultObject.success("success");
         } else {
-            return ResultObject.failed();
+            return ResultObject.failed(10009, "The resource is unable to be created.");
         }
     }
 
@@ -61,7 +54,7 @@ public class ResourceController {
         if (count > 0) {
             return ResultObject.success(count);
         } else {
-            return ResultObject.failed();
+            return ResultObject.failed(10010, "The resource is unable to be deleted.");
         }
     }
 
@@ -74,7 +67,7 @@ public class ResourceController {
         if (count > 0 ) {
             return ResultObject.success("success");
         } else {
-            return ResultObject.failed();
+            return ResultObject.failed(10011, "The resource is unable to be updated.");
         }
     }
 
