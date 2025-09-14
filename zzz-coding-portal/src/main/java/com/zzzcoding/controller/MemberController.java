@@ -36,9 +36,15 @@ public class MemberController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
     public ResultObject register(@Validated @RequestBody Member member) {
-        int count = memberMapper.selectByEmail(member.getEmail()).size();
-        if (count > 0) {
+        int existingEmail = memberMapper.selectByEmail(member.getEmail()).size();
+        int existingUsername = memberMapper.selectByUsername(member.getUsername()).size();
+
+        if (existingEmail > 0) {
             return ResultObject.failed(80001, "This email is already taken. Please try another one.");
+        }
+
+        if (existingUsername > 0) {
+            return ResultObject.failed(80005, "This username is already taken. Please try another one.");
         }
         memberService.register(member.getEmail(), member.getUsername(), member.getPassword());
         return ResultObject.success("success");

@@ -15,7 +15,9 @@ import java.util.List;
 public interface MemberMapper {
     List<Member> selectByEmail(String email);
 
-    int insert(Member member);
+    List<Member> selectByUsername(String username);
+
+    void insert(Member member);
 
     List<Member> selectByEmailOrUsername(String loginValue);
 }

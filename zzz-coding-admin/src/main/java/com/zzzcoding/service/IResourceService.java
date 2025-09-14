@@ -1,12 +1,8 @@
 package com.zzzcoding.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.zzzcoding.dto.ResourceParam;
 import com.zzzcoding.model.Resource;
 import com.zzzcoding.webapi.BaseService;
-import org.apache.ibatis.executor.BaseExecutor;
 
-import java.util.List;
 
 /**
  * <p>

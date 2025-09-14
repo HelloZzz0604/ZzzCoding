@@ -19,7 +19,8 @@ public enum ResultCode implements IErrorCode {
     PASSWORD_INCORRECT(10014,"Password is incorrect."),
     ACCOUNT_DISABLED(10015,"This account is disabled."),
     USER_NOT_FOUND(10016,"User not found."),
-    INVALID_EMAIL_FORMAT(10017, "Invalid email format");
+    INVALID_EMAIL_FORMAT(10017, "Invalid email format"),
+    MEMBER_NOT_FOUND(80004,"Member not found.");
 
     private long code;
     private String message;

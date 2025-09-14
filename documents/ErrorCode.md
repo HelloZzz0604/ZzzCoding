@@ -41,3 +41,7 @@ Portal
 **80002** Login name or password is incorrect.
 
 **80003** The given data is invalid.
+
+**80004** Member not found.
+
+**80005** This username is already taken. Please try another one.

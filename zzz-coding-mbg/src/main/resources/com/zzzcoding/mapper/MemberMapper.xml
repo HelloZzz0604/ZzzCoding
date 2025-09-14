@@ -17,6 +17,14 @@
         id, email, username, password, status, create_time, avatar, description
     </sql>
 
+    <select id="selectByEmail" resultMap="BaseResultMap">
+        select * from member where email = #{email}
+    </select>
+
+    <select id="selectByUsername" resultMap="BaseResultMap">
+        select * from member where username = #{username}
+    </select>
+
     <select id="selectByEmailOrUsername" resultMap="BaseResultMap">
         select * from member where email = #{loginValue} or username = #{loginValue}
     </select>

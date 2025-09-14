@@ -76,7 +76,7 @@ public class MemberServiceImpl implements IMemberService {
         if (member != null) {
             return new MemberDetails(member);
         }
-        throw new ApiException(ResultCode.USER_NOT_FOUND);
+        throw new ApiException(ResultCode.MEMBER_NOT_FOUND);
     }
 
     @Override
